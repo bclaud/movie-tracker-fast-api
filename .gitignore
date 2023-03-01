@@ -1,3 +1,4 @@
 .direnv/
 .nix-shell/
 .idea
+__pycache__/

@@ -8,6 +8,9 @@ packages = [{include = "movies_tracker"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+fastapi = "^0.92.0"
+uvicorn = {extras = ["standard"], version = "^0.20.0"}
+pytest = "^7.2.1"
 
 
 [build-system]

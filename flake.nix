@@ -14,10 +14,12 @@
         pkgs = import nixpkgs {
           inherit system;
         };
+
+        start = pkgs.writeScriptBin "start-app" "uvicorn main:app --reload";
       in
         with pkgs; rec {
           # packages = {};
-          devShell = mkShell { name = "development-shell"; buildInputs = [pkgs.python311 poetry pkgs.python311Packages.poetry-core pkgs.python311Packages.black]; };
+          devShell = mkShell { name = "development-shell"; buildInputs = [ start pkgs.python311 poetry pkgs.python311Packages.poetry-core pkgs.python311Packages.black pkgs.python311Packages.pytest]; };
         }
     );
 }
