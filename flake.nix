@@ -15,11 +15,12 @@
           inherit system;
         };
 
-        start = pkgs.writeScriptBin "start-app" "uvicorn main:app --reload";
+        start = pkgs.writeScriptBin "start" "uvicorn main:app --reload";
+        format = pkgs.writeScriptBin "format" "black .";
       in
         with pkgs; rec {
           # packages = {};
-          devShell = mkShell { name = "development-shell"; buildInputs = [ start pkgs.python311 poetry pkgs.python311Packages.poetry-core pkgs.python311Packages.black pkgs.python311Packages.pytest]; };
+          devShell = mkShell { name = "development-shell"; buildInputs = [ format start pkgs.python311 poetry pkgs.python311Packages.poetry-core pkgs.python311Packages.black pkgs.python311Packages.pytest]; };
         }
     );
 }
