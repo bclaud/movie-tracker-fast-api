@@ -51,23 +51,31 @@ class MongoMovieRepository(MovieRepository):
     def __init__(self, connection_string: str = "mongodb://localhost:27017"):
         self._client = motor.motor_asyncio.AsyncIOMotorClient(connection_string)
         # name of the database
-        self._database = self._client['movie_track_db']
+        self._database = self._client["movie_track_db"]
         # name of the collection
-        self._movies = self._database['movies']
+        self._movies = self._database["movies"]
 
     async def create(self, movie: Movie):
-        document = await self._movies.insert_one({
-            "id": movie.id,
-            "title": movie.title,
-            "description": movie.description,
-            "release_year": movie.release_year,
-            "watched": movie.watched
-            })
+        document = await self._movies.insert_one(
+            {
+                "id": movie.id,
+                "title": movie.title,
+                "description": movie.description,
+                "release_year": movie.release_year,
+                "watched": movie.watched,
+            }
+        )
 
     async def get(self, movie_id: str) -> typing.Optional[Movie]:
         document = await self._movies.find_one({"id": movie_id})
         if document:
-            return Movie(movie_id=document.get("id"), title=document.get("title"), description=document.get("description"), watched=document.get("watched"), release_year=document.get("release_year"))
+            return Movie(
+                movie_id=document.get("id"),
+                title=document.get("title"),
+                description=document.get("description"),
+                watched=document.get("watched"),
+                release_year=document.get("release_year"),
+            )
 
         return None
 
